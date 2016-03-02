@@ -1,5 +1,6 @@
 // FILE: models/user.js
 var Waterline = require('waterline');
+var helper = require('./../bin/helper');
 
 module.exports = Waterline.Collection.extend({
     // tableName corresponds to database table name
@@ -16,14 +17,30 @@ module.exports = Waterline.Collection.extend({
             type: 'email', // automatically got email validation
             required: true // required attribute
         },
-        age: {
-            type: 'integer',
-            min: 18
+        email_confirmation: {
+            type: 'boolean',
+            defaultsTo: 0
         },
-
+        password: {
+            type: 'string',
+            required: true,
+            minLength: 6
+        },
+        active: {
+            type: 'boolean',
+            defaultsTo: 0
+        },
+        activation_date: {
+            type: 'datetime'
+        },
         // instance methods can be put here
-        temporaryFunction: function() {
+        temporaryFunction: function () {
             // doing some stuff here
+        },
+        beforeCreate: function (values, next) {
+            var hash = helper.stringToMD5(values.password);
+            values.password = hash;
+            next();
         }
     }
 });

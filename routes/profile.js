@@ -1,46 +1,45 @@
 var express = require('express');
 var router = express.Router();
-/* GET users listing. */
+
+/* GET user-profiles listing. */
 router.get('/', function (req, res, next) {
-    req.models.user.find().exec(function (err, allUsers) {
+    req.models.profile.find().exec(function (err, allProfiles) {
         if (err) return res.json({error: err}, 500);
-        res.json(allUsers);
+        res.json(allProfiles);
     });
 });
 
-/* POST create new user. */
+/* POST create new user-profile. */
 router.post('/', function (req, res) {
-    console.log(JSON.stringify(req.body));
-    req.models.user.create(req.body, function (err, createdUser) {
+    req.models.profile.create(req.body, function (err, createdProfile) {
         if (err) return res.json({error: err}, 500);
-        res.json(createdUser);
+        res.json(createdProfile);
     });
 });
 
-/* GET specific user with id. */
+/* GET specific user-profile with id. */
 router.get('/:id', function (req, res) {
-    req.models.user.findOne({id: req.params.id}).exec(function (err, user) {
+    req.models.profile.findOne({id: req.params.id}).exec(function (err, profile) {
         if (err) return res.json({error: err}, 500);
-        res.json(user);
+        res.json(profile);
     });
 });
-/* PUT update specific user with id. */
+/* PUT update specific user-profile with id. */
 router.put('/:id', function (req, res) {
     // id not updated
     delete req.body.id;
 
-    req.models.user.update({id: req.params.id}, req.body, function (err, updatedUser) {
+    req.models.profile.update({id: req.params.id}, req.body, function (err, updatedUser) {
         if (err) return res.json({error: err}, 500);
         res.json(updatedUser);
     });
 });
-/* DELETE specific user. */
+/* DELETE specific user-profile. */
 router.delete('/:id', function (req, res) {
-    req.models.user.destroy({id: req.params.id}, function (err) {
+    req.models.profile.destroy({id: req.params.id}, function (err) {
         if (err) return res.json({error: err}, 500);
         res.json({status: 'ok'});
     });
 });
-
 
 module.exports = router;

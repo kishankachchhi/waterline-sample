@@ -9,9 +9,13 @@ var connectionConfig = require('../configs/connection.js');
 
 // load model definitions
 var User = require('../models/user.js');
+var Profile = require('../models/profile.js');
+var Country = require('../models/country.js');
 
 // load models into orm
 orm.loadCollection(User);
+orm.loadCollection(Profile);
+orm.loadCollection(Country);
 // you can load more collections (models) here
 
 // export an orm object
